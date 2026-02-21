@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CampusFix System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body{
+      margin:0;
+      font-family:Segoe UI, sans-serif;
+      background:#f4f6f9;
+      transition:0.3s;
+    }
+
+    header{
+      background:#0d1b2a;
+      color:white;
+      padding:20px;
+      text-align:center;
+      font-size:20px;
+      font-weight:bold;
+    }
+
+    .container{
+      max-width:550px;
+      margin:40px auto;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:12px;
+      margin-bottom:15px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      font-size:14px;
+    }
+
+    textarea{
+      resize:none;
+      height:90px;
+    }
+
+    button{
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:#0d6efd;
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:5px;
+    }
+
+    button:hover{
+      background:#0b5ed7;
+    }
+
+    .secondary{
+      background:#6c757d;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    /* DASHBOARD */
+
+    .controls{
+      padding:20px;
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .dashboard{
+      display:flex;
+      gap:20px;
+      padding:20px;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      flex:1;
+      min-width:200px;
+      background:white;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      text-align:center;
+    }
+
+    .progress-container{
+      width:100%;
+      background:#ddd;
+      border-radius:20px;
+      overflow:hidden;
+      margin-top:10px;
+    }
+
+    .progress-bar{
+      height:20px;
+      background:#28a745;
+      width:0%;
+      transition:0.4s;
+    }
+
+    .issues{
+      padding:20px;
+      display:grid;
+      gap:15px;
+    }
+
+    .issue{
+      background:white;
+      padding:15px;
+      border-radius:10px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .issue img{
+      max-width:150px;
+      margin-top:10px;
+      border-radius:8px;
+    }
+
+    .btn{
+      padding:8px 12px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      margin-top:10px;
+      font-weight:bold;
+      margin-right:5px;
+    }
+
+    .resolve{
+      background:#28a745;
+      color:white;
+    }
+
+    .resolved{
+      background:#000;
+      color:#fff;
+      cursor:not-allowed;
+      opacity:0.6;
+    }
+
+    .delete{
+      background:#dc3545;
+      color:white;
+    }
+
+    .dark{
+      background:#121212;
+      color:white;
+    }
+
+    .dark .card,
+    .dark .issue,
+    .dark .container{
+      background:#1e1e1e;
+      color:white;
+    }
+
+    .top-actions{
+      text-align:center;
+      margin-top:10px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  CampusFix System
+</header>
+
+<!-- ================= STUDENT PORTAL ================= -->
+<div class="container" id="studentPage">
+
+  <h2>Submit Campus Issue</h2>
+
+  <input type="text" id="title" placeholder="Issue Title">
+  <textarea id="description" placeholder="Describe the issue..."></textarea>
+
+  <select id="category">
+    <option value="">Select Category</option>
+    <option>Electrical</option>
+    <option>Plumbing</option>
+    <option>Cleaning</option>
+    <option>Internet</option>
+    <option>Others</option>
+  </select>
+
+  <input type="text" id="otherCategory" placeholder="Specify category" style="display:none;">
+
+  <select id="priority">
+    <option>High</option>
+    <option selected>Medium</option>
+    <option>Low</option>
+  </select>
+
+  <input type="file" id="image" accept="image/*">
+
+  <button onclick="submitIssue()">Submit Issue</button>
+
+  <div class="top-actions">
+    <button class="secondary" onclick="showLogin()">Admin Login</button>
+  </div>
+
+</div>
+
+
+<!-- ================= ADMIN LOGIN ================= -->
+<div class="container hidden" id="loginPage">
+
+  <h2>Admin Login</h2>
+
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="adminLogin()">Login</button>
+  <button class="secondary" onclick="goStudent()">Back</button>
+
+</div>
+
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+<div id="adminPage" class="hidden">
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search..." oninput="loadIssues()">
+
+    <select id="statusFilter" onchange="loadIssues()">
+      <option value="">All Status</option>
+      <option>Pending</option>
+      <option>Resolved</option>
+    </select>
+
+    <select id="priorityFilter" onchange="loadIssues()">
+      <option value="">All Priority</option>
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
+
+    <button onclick="toggleDark()">Dark Mode</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="dashboard">
+
+    <div class="card">
+      <h3>Total</h3>
+      <h2 id="total">0</h2>
+    </div>
+
+    <div class="card">
+      <h3>Resolved</h3>
+      <h2 id="resolvedCount">0</h2>
+    </div>
+
+    <div class="card">
+      <h3>Pending</h3>
+      <h2 id="pendingCount">0</h2>
+    </div>
+
+    <div class="card">
+      <h3>High Priority</h3>
+      <h2 id="highCount">0</h2>
+    </div>
+
+    <div class="card">
+      <h3>Progress</h3>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin:20px;">
+    <h3>Category Statistics</h3>
+    <div id="categoryStats"></div>
+  </div>
+
+  <div class="issues" id="issues"></div>
+
+</div>
+
+<script>
+
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "1234";
+
+/* CATEGORY OTHER */
+document.getElementById("category").addEventListener("change", function(){
+  document.getElementById("otherCategory").style.display =
+    this.value === "Others" ? "block" : "none";
+});
+
+/* NAVIGATION */
+function showLogin(){
+  studentPage.classList.add("hidden");
+  loginPage.classList.remove("hidden");
+}
+
+function goStudent(){
+  loginPage.classList.add("hidden");
+  studentPage.classList.remove("hidden");
+}
+
+function logout(){
+  adminPage.classList.add("hidden");
+  studentPage.classList.remove("hidden");
+}
+
+/* STUDENT SUBMIT */
+function submitIssue(){
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const categorySelect = document.getElementById("category").value;
+  const otherCategory = document.getElementById("otherCategory").value;
+  const priority = document.getElementById("priority").value;
+  const imageInput = document.getElementById("image");
+
+  if(!title || !description || !categorySelect){
+    alert("Please fill all required fields");
+    return;
+  }
+
+  const finalCategory = categorySelect === "Others" ? otherCategory : categorySelect;
+
+  const reader = new FileReader();
+
+  reader.onload = function(){
+    const issue = {
+      id: Date.now(),
+      title,
+      description,
+      category: finalCategory,
+      priority,
+      status:"Pending",
+      image: imageInput.files[0] ? reader.result : null
+    };
+
+    let issues = JSON.parse(localStorage.getItem("issues")) || [];
+    issues.push(issue);
+    localStorage.setItem("issues", JSON.stringify(issues));
+
+    alert("Issue Submitted!");
+    location.reload();
+  };
+
+  if(imageInput.files[0]) reader.readAsDataURL(imageInput.files[0]);
+  else reader.onload();
+}
+
+/* ADMIN LOGIN */
+function adminLogin(){
+  if(username.value === ADMIN_USERNAME && password.value === ADMIN_PASSWORD){
+    loginPage.classList.add("hidden");
+    adminPage.classList.remove("hidden");
+    loadIssues();
+  } else {
+    alert("Invalid Credentials");
+  }
+}
+
+/* LOAD ISSUES */
+function loadIssues(){
+  const issues = JSON.parse(localStorage.getItem("issues")) || [];
+  const container = document.getElementById("issues");
+  container.innerHTML = "";
+
+  const search = searchInput();
+  const statusFilter = statusFilterInput();
+  const priorityFilter = priorityFilterInput();
+
+  let total=0, resolved=0, pending=0, high=0;
+  let categoryCount={};
+
+  issues.forEach((issue,index)=>{
+
+    if(search &&
+      !issue.title.toLowerCase().includes(search) &&
+      !issue.description.toLowerCase().includes(search)
+    ) return;
+
+    if(statusFilter && issue.status !== statusFilter) return;
+    if(priorityFilter && issue.priority !== priorityFilter) return;
+
+    total++;
+
+    if(issue.status==="Resolved") resolved++;
+    else pending++;
+
+    if(issue.priority==="High") high++;
+
+    categoryCount[issue.category]=(categoryCount[issue.category]||0)+1;
+
+    const div=document.createElement("div");
+    div.className="issue";
+
+    div.innerHTML=`
+      <h3>${issue.title}</h3>
+      <p>${issue.description}</p>
+      <p><b>Category:</b> ${issue.category}</p>
+      <p><b>Priority:</b> ${issue.priority}</p>
+      <p><b>Status:</b> ${issue.status}</p>
+      ${issue.image?`<img src="${issue.image}">`:""}
+      <br>
+      ${
+        issue.status==="Resolved"
+        ? `<button class="btn resolved" disabled>Resolved</button>`
+        : `<button class="btn resolve" onclick="markResolved(${index})">Resolve</button>`
+      }
+      <button class="btn delete" onclick="deleteIssue(${index})">Delete</button>
+    `;
+
+    container.appendChild(div);
+  });
+
+  document.getElementById("total").innerText=total;
+  document.getElementById("resolvedCount").innerText=resolved;
+  document.getElementById("pendingCount").innerText=pending;
+  document.getElementById("highCount").innerText=high;
+
+  document.getElementById("progressBar").style.width =
+    total ? (resolved/total*100)+"%" : "0%";
+
+  let catHTML="";
+  for(let cat in categoryCount){
+    catHTML+=`<p><b>${cat}</b>: ${categoryCount[cat]}</p>`;
+  }
+  categoryStats.innerHTML=catHTML || "No issues available";
+}
+
+function markResolved(index){
+  let issues=JSON.parse(localStorage.getItem("issues"))||[];
+  issues[index].status="Resolved";
+  localStorage.setItem("issues",JSON.stringify(issues));
+  loadIssues();
+}
+
+function deleteIssue(index){
+  if(confirm("Delete this issue?")){
+    let issues=JSON.parse(localStorage.getItem("issues"))||[];
+    issues.splice(index,1);
+    localStorage.setItem("issues",JSON.stringify(issues));
+    loadIssues();
+  }
+}
+
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+function searchInput(){ return document.getElementById("search").value.toLowerCase(); }
+function statusFilterInput(){ return document.getElementById("statusFilter").value; }
+function priorityFilterInput(){ return document.getElementById("priorityFilter").value; }
+
+</script>
+
+</body>
+</html>
+
+  
