@@ -1,473 +1,401 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CampusFix System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CampusFix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    body{
-      margin:0;
-      font-family:Segoe UI, sans-serif;
-      background:#f4f6f9;
-      transition:0.3s;
-    }
+<style>
 
-    header{
-      background:#0d1b2a;
-      color:white;
-      padding:20px;
-      text-align:center;
-      font-size:20px;
-      font-weight:bold;
-    }
+/* ---------- GLOBAL ---------- */
 
-    .container{
-      max-width:550px;
-      margin:40px auto;
-      background:white;
-      padding:30px;
-      border-radius:12px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    }
+body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:#f1f5f9;
+  color:#0f172a;
+  transition:0.3s;
+}
 
-    input, select, textarea{
-      width:100%;
-      padding:12px;
-      margin-bottom:15px;
-      border-radius:8px;
-      border:1px solid #ccc;
-      font-size:14px;
-    }
+.hidden{display:none;}
 
-    textarea{
-      resize:none;
-      height:90px;
-    }
+button{
+  padding:10px 16px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s ease;
+}
 
-    button{
-      padding:12px;
-      border:none;
-      border-radius:8px;
-      background:#0d6efd;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-      margin-top:5px;
-    }
+/* ---------- BUTTONS ---------- */
 
-    button:hover{
-      background:#0b5ed7;
-    }
+.primary{
+  background:#059669;
+  color:white;
+}
 
-    .secondary{
-      background:#6c757d;
-    }
+.primary:hover{
+  background:#047857;
+}
 
-    .hidden{
-      display:none;
-    }
+.success{
+  background:#10b981;
+  color:white;
+}
 
-    /* DASHBOARD */
+.danger{
+  background:#ef4444;
+  color:white;
+}
 
-    .controls{
-      padding:20px;
-      display:flex;
-      gap:15px;
-      flex-wrap:wrap;
-    }
+/* ---------- HEADER ---------- */
 
-    .dashboard{
-      display:flex;
-      gap:20px;
-      padding:20px;
-      flex-wrap:wrap;
-    }
+header{
+  background:#0f172a;
+  color:white;
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.2);
+}
 
-    .card{
-      flex:1;
-      min-width:200px;
-      background:white;
-      padding:20px;
-      border-radius:12px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
-      text-align:center;
-    }
+header h2{
+  margin:0;
+  font-weight:600;
+}
 
-    .progress-container{
-      width:100%;
-      background:#ddd;
-      border-radius:20px;
-      overflow:hidden;
-      margin-top:10px;
-    }
+/* ---------- HOME PAGE ---------- */
 
-    .progress-bar{
-      height:20px;
-      background:#28a745;
-      width:0%;
-      transition:0.4s;
-    }
+.home{
+  text-align:center;
+  padding:100px 20px;
+}
 
-    .issues{
-      padding:20px;
-      display:grid;
-      gap:15px;
-    }
+.home h1{
+  font-size:42px;
+  margin-bottom:20px;
+  font-weight:700;
+  color:#0f172a;
+}
 
-    .issue{
-      background:white;
-      padding:15px;
-      border-radius:10px;
-      box-shadow:0 3px 8px rgba(0,0,0,0.1);
-    }
+.home p{
+  font-size:18px;
+  color:#475569;
+  margin-bottom:30px;
+}
 
-    .issue img{
-      max-width:150px;
-      margin-top:10px;
-      border-radius:8px;
-    }
+/* ---------- CARDS ---------- */
 
-    .btn{
-      padding:8px 12px;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      margin-top:10px;
-      font-weight:bold;
-      margin-right:5px;
-    }
+.container{
+  max-width:600px;
+  margin:40px auto;
+  background:white;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
 
-    .resolve{
-      background:#28a745;
-      color:white;
-    }
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.05);
+  transition:0.2s ease;
+}
 
-    .resolved{
-      background:#000;
-      color:#fff;
-      cursor:not-allowed;
-      opacity:0.6;
-    }
+.card:hover{
+  transform:translateY(-3px);
+}
 
-    .delete{
-      background:#dc3545;
-      color:white;
-    }
+/* ---------- INPUTS ---------- */
 
-    .dark{
-      background:#121212;
-      color:white;
-    }
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:1px solid #cbd5e1;
+  transition:0.2s;
+}
 
-    .dark .card,
-    .dark .issue,
-    .dark .container{
-      background:#1e1e1e;
-      color:white;
-    }
+input:focus, select:focus, textarea:focus{
+  border-color:#059669;
+  outline:none;
+  box-shadow:0 0 0 3px rgba(5,150,105,0.2);
+}
 
-    .top-actions{
-      text-align:center;
-      margin-top:10px;
-    }
+textarea{
+  resize:none;
+  height:90px;
+}
 
-  </style>
+/* ---------- DASHBOARD ---------- */
+
+.dashboard{
+  padding:30px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.progress-container{
+  background:#e2e8f0;
+  height:12px;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:12px;
+  background:#059669;
+  width:0%;
+}
+
+/* ---------- DARK MODE ---------- */
+
+.dark{
+  background:#0f172a;
+  color:white;
+}
+
+.dark .container,
+.dark .card{
+  background:#1e293b;
+  color:white;
+}
+
+.dark input,
+.dark select,
+.dark textarea{
+  background:#334155;
+  color:white;
+  border:1px solid #475569;
+}
+
+.dark header{
+  background:black;
+}
+
+.dark .home h1{
+  color:white;
+}
+
+.dark .home p{
+  color:#cbd5e1;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-  CampusFix System
+  <h2>CampusFix</h2>
+  <button onclick="toggleDark()">🌙</button>
 </header>
 
+<!-- ================= HOME PAGE ================= -->
+
+<div class="home" id="homePage">
+  <h1>FixHub -Raise your complaints here.</h1>
+  <p>Report, Track and Resolve Campus Issues Efficiently.</p>
+
+  <button class="primary" onclick="showStudent()">Report Issue</button>
+  <button onclick="showLogin()">Admin Login</button>
+</div>
+
 <!-- ================= STUDENT PORTAL ================= -->
-<div class="container" id="studentPage">
 
-  <h2>Submit Campus Issue</h2>
+<div class="container hidden" id="studentPortal">
+<h3>Submit Issue</h3>
 
-  <input type="text" id="title" placeholder="Issue Title">
-  <textarea id="description" placeholder="Describe the issue..."></textarea>
+<input type="text" id="title" placeholder="Issue Title">
+<textarea id="description" placeholder="Describe issue..."></textarea>
 
-  <select id="category">
-    <option value="">Select Category</option>
-    <option>Electrical</option>
-    <option>Plumbing</option>
-    <option>Cleaning</option>
-    <option>Internet</option>
-    <option>Others</option>
-  </select>
+<select id="category">
+<option value="">Select Category</option>
+<option>Electrical</option>
+<option>Plumbing</option>
+<option>Cleaning</option>
+<option>Internet</option>
+</select>
 
-  <input type="text" id="otherCategory" placeholder="Specify category" style="display:none;">
+<select id="priority">
+<option>High</option>
+<option selected>Medium</option>
+<option>Low</option>
+</select>
 
-  <select id="priority">
-    <option>High</option>
-    <option selected>Medium</option>
-    <option>Low</option>
-  </select>
-
-  <input type="file" id="image" accept="image/*">
-
-  <button onclick="submitIssue()">Submit Issue</button>
-
-  <div class="top-actions">
-    <button class="secondary" onclick="showLogin()">Admin Login</button>
-  </div>
-
+<button class="primary" onclick="submitIssue()">Submit Issue</button>
+<br><br>
+<button onclick="goHome()">Back</button>
 </div>
 
+<!-- ================= LOGIN ================= -->
 
-<!-- ================= ADMIN LOGIN ================= -->
-<div class="container hidden" id="loginPage">
+<div class="container hidden" id="loginBox">
+<h3>Admin Login</h3>
 
-  <h2>Admin Login</h2>
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
 
-  <input type="text" id="username" placeholder="Username">
-  <input type="password" id="password" placeholder="Password">
-
-  <button onclick="adminLogin()">Login</button>
-  <button class="secondary" onclick="goStudent()">Back</button>
-
+<button class="primary" onclick="adminLogin()">Login</button>
+<br><br>
+<button onclick="goHome()">Back</button>
 </div>
 
+<!-- ================= DASHBOARD ================= -->
 
-<!-- ================= ADMIN DASHBOARD ================= -->
-<div id="adminPage" class="hidden">
+<div class="hidden" id="adminDashboard">
+<div class="dashboard">
 
-  <div class="controls">
-    <input type="text" id="search" placeholder="Search..." oninput="loadIssues()">
+<h2>Admin Dashboard</h2>
 
-    <select id="statusFilter" onchange="loadIssues()">
-      <option value="">All Status</option>
-      <option>Pending</option>
-      <option>Resolved</option>
-    </select>
+<div class="stats">
+<div class="card">
+<h3>Total Issues</h3>
+<h2 id="total">0</h2>
+</div>
 
-    <select id="priorityFilter" onchange="loadIssues()">
-      <option value="">All Priority</option>
-      <option>High</option>
-      <option>Medium</option>
-      <option>Low</option>
-    </select>
+<div class="card">
+<h3>Resolved</h3>
+<h2 id="resolved">0</h2>
+<div class="progress-container">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+</div>
 
-    <button onclick="toggleDark()">Dark Mode</button>
-    <button onclick="logout()">Logout</button>
-  </div>
+<div class="card">
+<h3>Pending</h3>
+<h2 id="pending">0</h2>
+</div>
+</div>
 
-  <div class="dashboard">
+<div id="issuesList"></div>
 
-    <div class="card">
-      <h3>Total</h3>
-      <h2 id="total">0</h2>
-    </div>
+<button class="danger" style="position:fixed; bottom:20px; right:20px;" onclick="logout()">Logout</button>
 
-    <div class="card">
-      <h3>Resolved</h3>
-      <h2 id="resolvedCount">0</h2>
-    </div>
-
-    <div class="card">
-      <h3>Pending</h3>
-      <h2 id="pendingCount">0</h2>
-    </div>
-
-    <div class="card">
-      <h3>High Priority</h3>
-      <h2 id="highCount">0</h2>
-    </div>
-
-    <div class="card">
-      <h3>Progress</h3>
-      <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="card" style="margin:20px;">
-    <h3>Category Statistics</h3>
-    <div id="categoryStats"></div>
-  </div>
-
-  <div class="issues" id="issues"></div>
-
+</div>
 </div>
 
 <script>
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "1234";
+const ADMIN_USERNAME="admin";
+const ADMIN_PASSWORD="1234";
 
-/* CATEGORY OTHER */
-document.getElementById("category").addEventListener("change", function(){
-  document.getElementById("otherCategory").style.display =
-    this.value === "Others" ? "block" : "none";
-});
+/* ---------- NAVIGATION ---------- */
 
-/* NAVIGATION */
-function showLogin(){
-  studentPage.classList.add("hidden");
-  loginPage.classList.remove("hidden");
+function showStudent(){
+homePage.classList.add("hidden");
+studentPortal.classList.remove("hidden");
 }
 
-function goStudent(){
-  loginPage.classList.add("hidden");
-  studentPage.classList.remove("hidden");
+function showLogin(){
+homePage.classList.add("hidden");
+loginBox.classList.remove("hidden");
+}
+
+function goHome(){
+studentPortal.classList.add("hidden");
+loginBox.classList.add("hidden");
+homePage.classList.remove("hidden");
 }
 
 function logout(){
-  adminPage.classList.add("hidden");
-  studentPage.classList.remove("hidden");
+adminDashboard.classList.add("hidden");
+homePage.classList.remove("hidden");
 }
 
-/* STUDENT SUBMIT */
-function submitIssue(){
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const categorySelect = document.getElementById("category").value;
-  const otherCategory = document.getElementById("otherCategory").value;
-  const priority = document.getElementById("priority").value;
-  const imageInput = document.getElementById("image");
-
-  if(!title || !description || !categorySelect){
-    alert("Please fill all required fields");
-    return;
-  }
-
-  const finalCategory = categorySelect === "Others" ? otherCategory : categorySelect;
-
-  const reader = new FileReader();
-
-  reader.onload = function(){
-    const issue = {
-      id: Date.now(),
-      title,
-      description,
-      category: finalCategory,
-      priority,
-      status:"Pending",
-      image: imageInput.files[0] ? reader.result : null
-    };
-
-    let issues = JSON.parse(localStorage.getItem("issues")) || [];
-    issues.push(issue);
-    localStorage.setItem("issues", JSON.stringify(issues));
-
-    alert("Issue Submitted!");
-    location.reload();
-  };
-
-  if(imageInput.files[0]) reader.readAsDataURL(imageInput.files[0]);
-  else reader.onload();
-}
-
-/* ADMIN LOGIN */
-function adminLogin(){
-  if(username.value === ADMIN_USERNAME && password.value === ADMIN_PASSWORD){
-    loginPage.classList.add("hidden");
-    adminPage.classList.remove("hidden");
-    loadIssues();
-  } else {
-    alert("Invalid Credentials");
-  }
-}
-
-/* LOAD ISSUES */
-function loadIssues(){
-  const issues = JSON.parse(localStorage.getItem("issues")) || [];
-  const container = document.getElementById("issues");
-  container.innerHTML = "";
-
-  const search = searchInput();
-  const statusFilter = statusFilterInput();
-  const priorityFilter = priorityFilterInput();
-
-  let total=0, resolved=0, pending=0, high=0;
-  let categoryCount={};
-
-  issues.forEach((issue,index)=>{
-
-    if(search &&
-      !issue.title.toLowerCase().includes(search) &&
-      !issue.description.toLowerCase().includes(search)
-    ) return;
-
-    if(statusFilter && issue.status !== statusFilter) return;
-    if(priorityFilter && issue.priority !== priorityFilter) return;
-
-    total++;
-
-    if(issue.status==="Resolved") resolved++;
-    else pending++;
-
-    if(issue.priority==="High") high++;
-
-    categoryCount[issue.category]=(categoryCount[issue.category]||0)+1;
-
-    const div=document.createElement("div");
-    div.className="issue";
-
-    div.innerHTML=`
-      <h3>${issue.title}</h3>
-      <p>${issue.description}</p>
-      <p><b>Category:</b> ${issue.category}</p>
-      <p><b>Priority:</b> ${issue.priority}</p>
-      <p><b>Status:</b> ${issue.status}</p>
-      ${issue.image?`<img src="${issue.image}">`:""}
-      <br>
-      ${
-        issue.status==="Resolved"
-        ? `<button class="btn resolved" disabled>Resolved</button>`
-        : `<button class="btn resolve" onclick="markResolved(${index})">Resolve</button>`
-      }
-      <button class="btn delete" onclick="deleteIssue(${index})">Delete</button>
-    `;
-
-    container.appendChild(div);
-  });
-
-  document.getElementById("total").innerText=total;
-  document.getElementById("resolvedCount").innerText=resolved;
-  document.getElementById("pendingCount").innerText=pending;
-  document.getElementById("highCount").innerText=high;
-
-  document.getElementById("progressBar").style.width =
-    total ? (resolved/total*100)+"%" : "0%";
-
-  let catHTML="";
-  for(let cat in categoryCount){
-    catHTML+=`<p><b>${cat}</b>: ${categoryCount[cat]}</p>`;
-  }
-  categoryStats.innerHTML=catHTML || "No issues available";
-}
-
-function markResolved(index){
-  let issues=JSON.parse(localStorage.getItem("issues"))||[];
-  issues[index].status="Resolved";
-  localStorage.setItem("issues",JSON.stringify(issues));
-  loadIssues();
-}
-
-function deleteIssue(index){
-  if(confirm("Delete this issue?")){
-    let issues=JSON.parse(localStorage.getItem("issues"))||[];
-    issues.splice(index,1);
-    localStorage.setItem("issues",JSON.stringify(issues));
-    loadIssues();
-  }
-}
+/* ---------- DARK MODE ---------- */
 
 function toggleDark(){
-  document.body.classList.toggle("dark");
+document.body.classList.toggle("dark");
 }
 
-function searchInput(){ return document.getElementById("search").value.toLowerCase(); }
-function statusFilterInput(){ return document.getElementById("statusFilter").value; }
-function priorityFilterInput(){ return document.getElementById("priorityFilter").value; }
+/* ---------- STUDENT ---------- */
+
+function submitIssue(){
+const title=document.getElementById("title").value;
+const desc=document.getElementById("description").value;
+const cat=document.getElementById("category").value;
+const priority=document.getElementById("priority").value;
+
+if(!title||!desc||!cat){alert("Fill all fields");return;}
+
+const issue={
+id:Date.now(),
+title,
+description:desc,
+category:cat,
+priority,
+status:"Pending"
+};
+
+let issues=JSON.parse(localStorage.getItem("issues"))||[];
+issues.push(issue);
+localStorage.setItem("issues",JSON.stringify(issues));
+
+alert("Issue Submitted Successfully!");
+goHome();
+}
+
+/* ---------- ADMIN ---------- */
+
+function adminLogin(){
+if(username.value===ADMIN_USERNAME && password.value===ADMIN_PASSWORD){
+loginBox.classList.add("hidden");
+adminDashboard.classList.remove("hidden");
+loadIssues();
+}else{
+alert("Invalid Credentials");
+}
+}
+
+function loadIssues(){
+let issues=JSON.parse(localStorage.getItem("issues"))||[];
+
+let resolved=0;
+let pending=0;
+
+issuesList.innerHTML="";
+
+issues.forEach(issue=>{
+if(issue.status==="Resolved") resolved++;
+else pending++;
+
+const div=document.createElement("div");
+div.className="card";
+div.innerHTML=`
+<h3>${issue.title}</h3>
+<p>${issue.description}</p>
+<p><b>Category:</b> ${issue.category}</p>
+<p><b>Priority:</b> ${issue.priority}</p>
+<p><b>Status:</b> ${issue.status}</p>
+${issue.status==="Pending"?`<button class="success" onclick="resolve(${issue.id})">Resolve</button>`:`<button disabled>Resolved</button>`}
+`;
+issuesList.appendChild(div);
+});
+
+total.innerText=issues.length;
+resolved.innerText=resolved;
+pending.innerText=pending;
+
+progressBar.style.width= issues.length? (resolved/issues.length*100)+"%":"0%";
+}
+
+function resolve(id){
+let issues=JSON.parse(localStorage.getItem("issues"))||[];
+issues=issues.map(i=>i.id===id?{...i,status:"Resolved"}:i);
+localStorage.setItem("issues",JSON.stringify(issues));
+loadIssues();
+}
 
 </script>
 
 </body>
 </html>
-
-  
