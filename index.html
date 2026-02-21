@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CampusFix</title>
+<title>CampusFix Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -182,33 +182,113 @@ textarea{
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <h2>CampusFix</h2>
-  <button onclick="toggleDark()">🌙</button>
+  <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+  <h2>CampusFix Pro</h2>
 </header>
 
-<!-- ================= HOME PAGE ================= -->
-
+<!-- HOME PAGE -->
 <div class="home" id="homePage">
-  <h1>FixHub -Raise your complaints here.</h1>
-  <p>Report, Track and Resolve Campus Issues Efficiently.</p>
 
-  <button class="primary" onclick="showStudent()">Report Issue</button>
-  <button onclick="showLogin()">Admin Login</button>
+  <!-- HERO SECTION -->
+  <section style="padding:120px 20px; text-align:center;">
+    <h1 style="font-size:50px; margin-bottom:20px;
+    background:linear-gradient(90deg,#10b981,#38bdf8);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;">
+      Intelligent Campus Operations Platform
+    </h1>
+
+    <p style="font-size:20px; color:#cbd5e1; max-width:700px; margin:0 auto 40px;">
+      A smart digital solution to report, track and resolve campus issues
+      efficiently and transparently.
+    </p>
+
+    <button class="primary" onclick="showStudent()">Report an Issue</button>
+    <button style="margin-left:10px;" onclick="showLogin()">Admin Access</button>
+  </section>
+
+
+  <!-- FEATURES SECTION -->
+  <section style="padding:60px 20px;">
+    <h2 style="text-align:center; margin-bottom:40px;">Why Choose CampusFix?</h2>
+
+    <div style="display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px; max-width:1100px; margin:auto;">
+
+      <div class="card">
+        <h3>⚡ Fast Reporting</h3>
+        <p>Submit issues instantly with structured categories and priority tagging.</p>
+      </div>
+
+      <div class="card">
+        <h3>📊 Real-Time Tracking</h3>
+        <p>Monitor issue status and progress through an intelligent dashboard.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔒 Secure Admin Control</h3>
+        <p>Authorized admin login ensures secure issue management and resolution.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+  <section style="padding:60px 20px; background:rgba(255,255,255,0.03);">
+    <h2 style="text-align:center; margin-bottom:40px;">How It Works</h2>
+
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:40px;">
+
+      <div style="max-width:250px; text-align:center;">
+        <h3>1️⃣ Report</h3>
+        <p>Students submit issues via the digital portal.</p>
+      </div>
+
+      <div style="max-width:250px; text-align:center;">
+        <h3>2️⃣ Review</h3>
+        <p>Admin reviews and prioritizes reported problems.</p>
+      </div>
+
+      <div style="max-width:250px; text-align:center;">
+        <h3>3️⃣ Resolve</h3>
+        <p>Issues are marked resolved and tracked in dashboard analytics.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CALL TO ACTION -->
+  <section style="padding:80px 20px; text-align:center;">
+    <h2>Ready to Improve Campus Efficiency?</h2>
+    <p style="color:#cbd5e1; margin-bottom:30px;">
+      Join the next generation of smart campus management.
+    </p>
+
+    <button class="primary" onclick="showStudent()">Get Started</button>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer style="padding:30px; text-align:center; font-size:14px; color:#94a3b8;">
+    © 2026 CampusFix. All rights reserved.
+  </footer>
+
 </div>
 
-<!-- ================= STUDENT PORTAL ================= -->
-
+<!-- STUDENT PORTAL -->
 <div class="container hidden" id="studentPortal">
 <h3>Submit Issue</h3>
-
 <input type="text" id="title" placeholder="Issue Title">
-<textarea id="description" placeholder="Describe issue..."></textarea>
-
+<textarea id="description" placeholder="Describe issue"></textarea>
 <select id="category">
 <option value="">Select Category</option>
 <option>Electrical</option>
@@ -216,33 +296,27 @@ textarea{
 <option>Cleaning</option>
 <option>Internet</option>
 </select>
-
 <select id="priority">
 <option>High</option>
 <option selected>Medium</option>
 <option>Low</option>
 </select>
-
-<button class="primary" onclick="submitIssue()">Submit Issue</button>
+<button class="primary" onclick="submitIssue()">Submit</button>
 <br><br>
 <button onclick="goHome()">Back</button>
 </div>
 
-<!-- ================= LOGIN ================= -->
-
+<!-- LOGIN -->
 <div class="container hidden" id="loginBox">
 <h3>Admin Login</h3>
-
 <input type="text" id="username" placeholder="Username">
 <input type="password" id="password" placeholder="Password">
-
 <button class="primary" onclick="adminLogin()">Login</button>
 <br><br>
 <button onclick="goHome()">Back</button>
 </div>
 
-<!-- ================= DASHBOARD ================= -->
-
+<!-- DASHBOARD -->
 <div class="hidden" id="adminDashboard">
 <div class="dashboard">
 
@@ -256,7 +330,7 @@ textarea{
 
 <div class="card">
 <h3>Resolved</h3>
-<h2 id="resolved">0</h2>
+<h2 id="resolvedCount">0</h2>
 <div class="progress-container">
 <div class="progress-bar" id="progressBar"></div>
 </div>
@@ -264,23 +338,23 @@ textarea{
 
 <div class="card">
 <h3>Pending</h3>
-<h2 id="pending">0</h2>
+<h2 id="pendingCount">0</h2>
 </div>
 </div>
 
 <div id="issuesList"></div>
 
-<button class="danger" style="position:fixed; bottom:20px; right:20px;" onclick="logout()">Logout</button>
+</div>
+</div>
 
-</div>
-</div>
+<button class="logout-btn hidden" id="logoutBtn" onclick="logout()">Logout</button>
 
 <script>
 
 const ADMIN_USERNAME="admin";
 const ADMIN_PASSWORD="1234";
 
-/* ---------- NAVIGATION ---------- */
+/* NAVIGATION */
 
 function showStudent(){
 homePage.classList.add("hidden");
@@ -301,15 +375,16 @@ homePage.classList.remove("hidden");
 function logout(){
 adminDashboard.classList.add("hidden");
 homePage.classList.remove("hidden");
+logoutBtn.classList.add("hidden");
 }
 
-/* ---------- DARK MODE ---------- */
+/* DARK MODE */
 
 function toggleDark(){
 document.body.classList.toggle("dark");
 }
 
-/* ---------- STUDENT ---------- */
+/* STUDENT */
 
 function submitIssue(){
 const title=document.getElementById("title").value;
@@ -332,16 +407,17 @@ let issues=JSON.parse(localStorage.getItem("issues"))||[];
 issues.push(issue);
 localStorage.setItem("issues",JSON.stringify(issues));
 
-alert("Issue Submitted Successfully!");
+alert("Issue Submitted!");
 goHome();
 }
 
-/* ---------- ADMIN ---------- */
+/* ADMIN */
 
 function adminLogin(){
 if(username.value===ADMIN_USERNAME && password.value===ADMIN_PASSWORD){
 loginBox.classList.add("hidden");
 adminDashboard.classList.remove("hidden");
+logoutBtn.classList.remove("hidden");
 loadIssues();
 }else{
 alert("Invalid Credentials");
@@ -357,6 +433,7 @@ let pending=0;
 issuesList.innerHTML="";
 
 issues.forEach(issue=>{
+
 if(issue.status==="Resolved") resolved++;
 else pending++;
 
@@ -368,23 +445,41 @@ div.innerHTML=`
 <p><b>Category:</b> ${issue.category}</p>
 <p><b>Priority:</b> ${issue.priority}</p>
 <p><b>Status:</b> ${issue.status}</p>
-${issue.status==="Pending"?`<button class="success" onclick="resolve(${issue.id})">Resolve</button>`:`<button disabled>Resolved</button>`}
+<br>
+${issue.status==="Pending"
+? `<button class="success" onclick="resolveIssue(${issue.id})">Resolve</button>`
+: `<button disabled>Resolved</button>`}
+<button class="danger" onclick="deleteIssue(${issue.id})">Delete</button>
 `;
+
 issuesList.appendChild(div);
 });
 
 total.innerText=issues.length;
-resolved.innerText=resolved;
-pending.innerText=pending;
+resolvedCount.innerText=resolved;
+pendingCount.innerText=pending;
 
 progressBar.style.width= issues.length? (resolved/issues.length*100)+"%":"0%";
 }
 
-function resolve(id){
+/* RESOLVE */
+
+function resolveIssue(id){
 let issues=JSON.parse(localStorage.getItem("issues"))||[];
 issues=issues.map(i=>i.id===id?{...i,status:"Resolved"}:i);
 localStorage.setItem("issues",JSON.stringify(issues));
 loadIssues();
+}
+
+/* DELETE FEATURE (ADDED PROPERLY) */
+
+function deleteIssue(id){
+if(confirm("Are you sure you want to delete this issue?")){
+let issues=JSON.parse(localStorage.getItem("issues"))||[];
+issues=issues.filter(i=>i.id!==id);
+localStorage.setItem("issues",JSON.stringify(issues));
+loadIssues();
+}
 }
 
 </script>
