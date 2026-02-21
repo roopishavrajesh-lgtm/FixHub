@@ -301,6 +301,15 @@ textarea{
 <option selected>Medium</option>
 <option>Low</option>
 </select>
+
+<!-- IMAGE UPLOAD SECTION -->
+<label><b>Attach Image (Optional)</b></label>
+<input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)">
+
+<img id="imagePreview" 
+     style="width:100%; max-height:200px; object-fit:cover; 
+     border-radius:10px; margin-bottom:15px; display:none;">
+
 <button class="primary" onclick="submitIssue()">Submit</button>
 <br><br>
 <button onclick="goHome()">Back</button>
@@ -383,10 +392,26 @@ logoutBtn.classList.add("hidden");
 function toggleDark(){
 document.body.classList.toggle("dark");
 }
+let selectedImage = "";
 
+function previewImage(event){
+  const file = event.target.files[0];
+
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      selectedImage = e.target.result;
+      const preview = document.getElementById("imagePreview");
+      preview.src = selectedImage;
+      preview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  }
+}
 /* STUDENT */
 
 function submitIssue(){
+    
 const title=document.getElementById("title").value;
 const desc=document.getElementById("description").value;
 const cat=document.getElementById("category").value;
@@ -400,7 +425,8 @@ title,
 description:desc,
 category:cat,
 priority,
-status:"Pending"
+status:"Pending",
+image:selectedImage
 };
 
 let issues=JSON.parse(localStorage.getItem("issues"))||[];
@@ -445,6 +471,9 @@ div.innerHTML=`
 <p><b>Category:</b> ${issue.category}</p>
 <p><b>Priority:</b> ${issue.priority}</p>
 <p><b>Status:</b> ${issue.status}</p>
+
+${issue.image ? `<img src="${issue.image}" 
+style="width:100%; max-height:200px; object-fit:cover; border-radius:10px; margin:10px 0;">` : ""}
 <br>
 ${issue.status==="Pending"
 ? `<button class="success" onclick="resolveIssue(${issue.id})">Resolve</button>`
