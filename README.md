@@ -2,54 +2,52 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# FixHub 🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: Hack
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
-
+- Member 1: Roopisha V Rajesh - College of Engineering Munnar
+- Member 2: Pooja Subhash - College of Engineering Munnar
 ### Hosted Project Link
 [mention your project hosted link here]
 
 ### Project Description
-[2-3 lines about what your project does]
+This project is a web based issue managemnet system that allows users to report campus problem easily .
+Administrators can view ,search , filter  and mark  issues as resolved through a dashboard.
+It improves communication and tracking using HTML, CSS and JAVASCRIPT with local storage.
 
 ### The Problem statement
-[What problem are you solving?]
+Manay institutions face delays and confusion in handling maintenance or technical complaints due to manual reporting systems and lack of proper tracking.
+There is no centralised platform to monitor issue status,leading to poor communication and unresolves problems.This project solves these changes by providing a structured 
+digital system for reporting tracking and managing issues efficiently.
 
 ### The Solution
-[How are you solving it?]
-
----
+A centralised web platform that allows users to report issues and administrators to track, manage and resolve them efficiently,improving transparency and responanse time.
 
 ## Technical Details
+Built using HTML ,CSS and Javascript with DOM manipulation for dynamic updates .Data is stored using the browsers,Local storage and
+event handling is used for form submission,filtering and status management.
 
 ### Technologies/Components Used
 
 **For Software:**
-- Languages used: [e.g., JavaScript, Python, Java]
-- Frameworks used: [e.g., React, Django, Spring Boot]
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: [e.g., VS Code, Git, Docker]
+- Languages used:  JavaScript, HTML, CSS
 
-**For Hardware:**
-- Main components: [List main components]
-- Specifications: [Technical specifications]
-- Tools required: [List tools needed]
+- Tools used:  VS Code, web browser,local storage
+
 
 ---
 
 ## Features
 
 List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
+- Feature 1: issue submission with category,priority, and optional image upload
+- Feature 2: search and category based filtering
+- Feature 3: delete issue functionality
+- Feature 4: dashboard statistics
 
 ---
 
@@ -83,14 +81,17 @@ List the key features of your project:
 
 #### Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+<img width="1920" height="1200" alt="Screenshot 2026-02-21 092336" src="https://github.com/user-attachments/assets/13cff76f-7cca-48d6-94f0-469064469612" />
+This is the index page where we can raise the issues.
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+<img width="1920" height="1200" alt="Screenshot 2026-02-21 092531" src="https://github.com/user-attachments/assets/4c68fa54-d3a5-4c1d-a7ab-e2567db14248" />
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+this is the admin login page
+
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/8ece4836-f378-488e-92dc-089ae14f56dd" />
+
+this is the admin page where the admin get the access to the raised problems
+
 
 #### Diagrams
 
